@@ -1,16 +1,16 @@
 #Creating IoT Devices with PubNub and the ESP8266
 
 [image-schematic]: images/esp8266_schematic.png
-[image-pins]: /images/esp8266_pins.png
-[image-breadboard1]: /images/esp8266_breadboard1.png
-[image-breadboard2]: /images/esp8266_breadboard2.png
-[image-console1]: /images/esp8266_console1.png
-[image-console2]: /images/esp8266_console2.png
-[image-debug1]: /images/esp8266_debug1.png
-[image-debug2]: /images/esp8266_debug2.png
-[image-debug3]: /images/esp8266_debug3.png
-[image-debug4]: /images/esp8266_debug4.png
-[image-debug5]: /images/esp8266_debug5.png
+[image-pins]: images/esp8266_pins.png
+[image-breadboard1]: images/esp8266_breadboard1.png
+[image-breadboard2]: images/esp8266_breadboard2.png
+[image-console1]: images/esp8266_console1.png
+[image-console2]: images/esp8266_console2.png
+[image-debug1]: images/esp8266_debug1.png
+[image-debug2]: images/esp8266_debug2.png
+[image-debug3]: images/esp8266_debug3.png
+[image-debug4]: images/esp8266_debug4.png
+[image-debug5]: images/esp8266_debug5.png
 
 In case you hadn't heard, the internet of things is king of a big deal. Rather than bore you with the predictions of how many *billions* of devices will be connected in the next few years, I'm going to show you how to easily create an IoT device using the aweseome ESP8266 WiFi module and connect that device to *anyone*, *anywhere*, in real time with the power of PubNub.
 
