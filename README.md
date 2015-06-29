@@ -132,25 +132,23 @@ void IFA user_init()
 
 Othwerwise, you are free to write your own functions and call them like a normal C program. The "IFA" attribute is actually a macro I defined in *include/esp8266.h* as:
 
-Gist ID: 7756459c939b76e021c5
-File: IFA_header.h
-
-    #define IFA ICACHE_FLASH_ATTR
+``` C
+#define IFA ICACHE_FLASH_ATTR
+```
 
 If a function is prefixed with IFA, it is written to flash which is mapped to ROM. Without this attribute, the function will end up in the instruction RAM segment, which is faster, but will fill up quickly. If at all possible, always use the IFA attribute. This header file also includes most all of the SDK libraries commonly used as well as remapping a few common C functions (like *printf*) to the version required by the Espressif SDK (*os_printf*). Lastly, it defines a simple debug printing macro which can be used to selectively print statements when a certain value is defined, which it is in the *include/user_config.h* file. I use this macro extensively in the library, but be careful with it as it can easily be broken.
 
-Gist ID: 7756459c939b76e021c5
-File: debug_print.h
+``` C
+// Define to print debug statements over UART using DEBUG_PRINT()
+#define DEBUG_PRINT_	1
 
-    // Define to print debug statements over UART using DEBUG_PRINT()
-    #define DEBUG_PRINT_	1
-
-    // Only prints lines for debugging purposes
-    #ifdef DEBUG_PRINT_
-    #	define DEBUG_PRINT(S)	printf S
-    #else
-    #	define DEBUG_PRINT(S)
-    #endif
+// Only prints lines for debugging purposes
+#ifdef DEBUG_PRINT_
+#	define DEBUG_PRINT(S)	printf S
+#else
+#	define DEBUG_PRINT(S)
+#endif
+```
 
 Inside of the *user_init()* function, we will initialize the UART connection, setup the GPIO pins, and connect to WiFi. The values of *SSID* and *SSID_PW* are define in *include/user_config.h*. You must set these values to the corresponding SSID and password for your home WiFi connection! The overall code flow goes somthing like this:
 1.Initialize UART
@@ -164,35 +162,34 @@ Inside of the *user_init()* function, we will initialize the UART connection, se
 
 The provided library defines the following functions in *pubnub/pubnub.h*.
 
-Gist ID: 7756459c939b76e021c5
-File: pubnub_api.h
+``` C
+/** 
+ * Creates a connection to Pubnub
+ * This should be called when a network connection is established!
+ */
+void IFA pubnub_connect(void);
 
-    /** 
-     * Creates a connection to Pubnub
-     * This should be called when a network connection is established!
-     */
-    void IFA pubnub_connect(void);
+/** 
+ * Initialize the PubNub Connection
+ */
+void IFA pubnub_init(const char *publish_key, const char *subscribe_key);
 
-    /** 
-     * Initialize the PubNub Connection
-     */
-    void IFA pubnub_init(const char *publish_key, const char *subscribe_key);
+/** 
+ * Publish message on channel using Pubnub.
+ * JSON type message should be used, Unicode characters are injected automatically...
+ */
+bool IFA pubnub_publish(const char *channel, const char *message);
 
-    /** 
-     * Publish message on channel using Pubnub.
-     * JSON type message should be used, Unicode characters are injected automatically...
-     */
-    bool IFA pubnub_publish(const char *channel, const char *message);
+/** 
+ * Subscribe to a Pubnub channel
+ */
+bool IFA pubnub_subscribe(const char *channel, Pubnub_subscribeCB subCB);
 
-    /** 
-     * Subscribe to a Pubnub channel
-     */
-    bool IFA pubnub_subscribe(const char *channel, Pubnub_subscribeCB subCB);
-
-    /** 
-     * Unsubscribe to a Pubnub channel
-     */
-    bool IFA pubnub_unsubscribe(const char *channel);
+/** 
+ * Unsubscribe to a Pubnub channel
+ */
+bool IFA pubnub_unsubscribe(const char *channel);
+```
 
 The usage of each of these functions is clearly shown in *user/user_main.c*. I have also supplied the full C source code instead of a typical lib file, so feel free to poke around inside and alter the code to be more specific to your tasks. The primary force behind the library is the <a href = "http://www.pubnub.com/http-rest-push-api/" target="_blank">PubNub REST API</a>. An HTTP Get request string is build and used for all functionality. Using these basic building blocks, other PubNub functionality can be added including <a href ="http://www.pubnub.com/products/" target ="_blank">Presence, History, and Security</a>.
 
