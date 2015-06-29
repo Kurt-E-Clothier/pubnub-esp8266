@@ -99,7 +99,6 @@ static void IFA pubnub_dnsFoundCB(const char *name, ip_addr_t *ip, void *arg)
 		os_memcpy(pb_conn->proto.tcp->remote_ip, &ip->addr, 4);
 		
 		// Register Callbacks
-		espconn_regist_time(pb_conn, 10, -3 );
 		espconn_regist_connectcb(pb_conn, pubnub_conCB);
 		espconn_regist_disconcb(pb_conn, pubnub_disconCB);
 		espconn_regist_reconcb(pb_conn, pubnub_reconCB);
