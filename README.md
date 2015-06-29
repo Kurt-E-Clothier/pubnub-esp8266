@@ -16,8 +16,6 @@ In case you hadn't heard, the internet of things is king of a big deal. Rather t
 
 Many projects encorporating the ESP8266 use it as an external module, communicaiting over a serial port with a complex set of AT commands. But this module is actually a programmable 32bit MCU with an embedded TCP stack, and if it speaks TCP, it speaks PubNub. With a bit of effort, we can write our own firmware to create a stand-alone, WiFi-enabled device!
 
-<iframe src="https://vine.co/v/eJeJxTh9q0p/embed/simple" width="400" height="400" align="center" frameborder="0"></iframe><script src="https://platform.vine.co/static/scripts/embed.js"></script>
-
 ##Project Overview
 For this project, I am using the tiny ESP-01, but any of the modules with access to GPIO0 and GPIO2 will work. The module is loaded with custom firmware, written in C, and compiled using the official SDK from Espressif on a Debian Linux machine. To start, here are a few things you need to get:
 
@@ -25,8 +23,6 @@ For this project, I am using the tiny ESP-01, but any of the modules with access
 * ***USB to Serial Module*** - For programming and debugging - it must use 3.3V signals! This is a great one from <a href = "https://www.sparkfun.com/products/9873" target="_blank">Sparkfun</a>.
 * ***Development Environment*** - This is the most complicated part, so I will direct you to the <a href = "https://.com/esp8266/esp8266-wiki/wiki/Toolchain" target="_blank">official documentation</a>.
 * ***PubNub*** - Sign up for a free account <a href = "http://www.pubnub.com/get-started/" target="_blank">here</a>, and then get your own keys <a href = "http://admin.pubnub.com" target="_blank">here</a>. 
-
-**Source Code Repository: http://github.com/Kurt-E-Clothier/pubnub-esp8266**
 
 With that out of the way, we can get down to business. Like I said before, we will be writing custom firmware to load onto the ESP8266 which can send and receive data to and from any other PubNub enabled device. With over <a href = "http://www.pubnub.com/developers/" target="_blank">70 official SDKs</a>, that shouldn't be a problem! Unfortunately, the ESP8266 is not currently an *officially* supported device, but never fear - I've created a basic library for use with this module that should get you going in no time! The library builds off of the <a href = "http://www.pubnub.com/http-rest-push-api/" target="_blank">PubNub REST API</a>, but more on that later...
 
@@ -116,6 +112,8 @@ The most common hooks in use are:
 
 Gist ID: 7756459c939b76e021c5
 File: esp8266_hooks.c
+
+{% gist 7756459c939b76e021c5 esp8266_hooks.c %}
 
     // Required for SDK v1.1.0 - Can be used to disable RF
     void user_rf_pre_init(void)
