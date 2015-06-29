@@ -110,28 +110,25 @@ When directly programming common microcontrollers like the Atmel AVR line, you c
 
 The most common hooks in use are:
 
-Gist ID: 7756459c939b76e021c5
-File: esp8266_hooks.c
+``` C
+// Required for SDK v1.1.0 - Can be used to disable RF
+void user_rf_pre_init(void)
+{
+}
 
-{% gist 7756459c939b76e021c5 esp8266_hooks.c %}
+// Loop function - Can/will continuously reschedule itself to run
+static void IFA user_procTask(os_event_t *events)
+{
+    os_delay_us(10);
+    //system_os_post(user_procTaskPrio, 0, 0 );
+}
 
-    // Required for SDK v1.1.0 - Can be used to disable RF
-    void user_rf_pre_init(void)
-    {
-    }
-
-    // Loop function - Can/will continuously reschedule itself to run
-    static void IFA user_procTask(os_event_t *events)
-    {
-        os_delay_us(10);
-        //system_os_post(user_procTaskPrio, 0, 0 );
-    }
-
-    // User Initialization
-    void IFA user_init()
-    {
-        // Initialize the device here
-    }
+// User Initialization
+void IFA user_init()
+{
+    // Initialize the device here
+}
+```
 
 Othwerwise, you are free to write your own functions and call them like a normal C program. The "IFA" attribute is actually a macro I defined in *include/esp8266.h* as:
 
